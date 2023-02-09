@@ -55,17 +55,17 @@
   margin: 0;
 }
 
-.about__timeline-cell_type_green-black {
+.about__timeline-box_type_green-black {
   background-color: #3DDC84;
   color: #000000;
 }
 
-.about__timeline-cell_type_white-grey {
+.about__timeline-box_type_white-grey {
   background-color: #303030;
   color: #FFFFFF;
 }
 
-.about__timeline-cell_type_grey-transparent {
+.about__timeline-box_type_grey-transparent {
   background-color: transparent;
   color: #A0A0A0;
 }

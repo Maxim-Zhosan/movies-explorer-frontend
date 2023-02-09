@@ -37,6 +37,11 @@
   box-sizing: border-box;
 }
 
+.search__input:hover,
+.search__input:focus {
+  border: 1px solid #4285F4;
+}
+
 .search__search-button {
   position: absolute;
   width: 80px;
@@ -50,6 +55,11 @@
   border: none;
   outline: none;
   background-image: url("../../images/search-icon.svg");
+}
+
+.search__search-button:hover {
+  transform: scale(1.07);
+  transition: 0.3s ease-in;
 }
 
 .search__search-icon:active,

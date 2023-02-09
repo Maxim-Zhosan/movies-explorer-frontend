@@ -60,7 +60,13 @@
   padding: 0 0 10px;
 }
 
-.input__error {
+.login__input:focus {
+  outline: 0;
+  outline-offset: 0;
+  border-bottom: 1px solid #3DDC84;
+}
+
+.login__input-error {
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;
@@ -72,7 +78,7 @@
   min-height: 12px;
 }
 
-.input__error:last-of-type {
+.login__input-error:last-of-type {
   margin-bottom: 18px;
 }
 

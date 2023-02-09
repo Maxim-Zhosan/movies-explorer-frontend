@@ -13,10 +13,10 @@ function Login() {
       <form className="login__form">
         <label htmlFor="email" className="login__label">E-mail</label>
         <input required className="login__input" value="pochta@yandex.ru" type="email" name="email" id="email" />
-        <span id="popup__input_type_email-error" className="input__error" />
+        <span className="login__input-error" />
         <label className="login__label" htmlFor="password">Пароль</label>
         <input required className="login__input" type="password" name="password" id="password" />
-        <span id="popup__input_type_submit-error" className="input__error">Что-то пошло не так...</span>
+        <span className="login__input-error">Что-то пошло не так...</span>
         <button type="submit" className="login__button">Войти</button>
       </form>
       <p className="login__text">

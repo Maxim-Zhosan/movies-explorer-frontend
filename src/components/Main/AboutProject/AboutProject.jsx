@@ -27,10 +27,10 @@ function AboutProject({ projectRef }) {
         </div>
       </div>
       <div className="about__timeline-block">
-        <p className="about__timeline-box about__timeline-cell_type_green-black">1 неделя</p>
-        <p className="about__timeline-box about__timeline-cell_type_white-grey">4 недели</p>
-        <p className="about__timeline-box about__timeline-cell_type_grey-transparent">Back-end</p>
-        <p className="about__timeline-box about__timeline-cell_type_grey-transparent">Front-end</p>
+        <p className="about__timeline-box about__timeline-box_type_green-black">1 неделя</p>
+        <p className="about__timeline-box about__timeline-box_type_white-grey">4 недели</p>
+        <p className="about__timeline-box about__timeline-box_type_grey-transparent">Back-end</p>
+        <p className="about__timeline-box about__timeline-box_type_grey-transparent">Front-end</p>
       </div>
     </section>
   );

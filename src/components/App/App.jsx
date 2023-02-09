@@ -12,8 +12,8 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
-
   return (
+
     <LoggedInContext.Provider value={isLoggedIn}>
       <div className="page">
         <Routes>
@@ -27,6 +27,7 @@ function App() {
         </Routes>
       </div>
     </LoggedInContext.Provider>
+
   );
 }
 

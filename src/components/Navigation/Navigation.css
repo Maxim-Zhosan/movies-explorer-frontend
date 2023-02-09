@@ -13,7 +13,7 @@
   z-index: 1;
 }
 
-.navigation_opened {
+.navigation_type_opened {
   visibility: visible;
   opacity: 1;
 }
@@ -57,7 +57,6 @@
 
 .navigation__links {
   display: grid;
-  grid-auto-flow: raw;
   padding: 0;
   margin: 0;
   list-style-type: none;

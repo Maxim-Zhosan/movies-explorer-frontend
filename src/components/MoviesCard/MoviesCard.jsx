@@ -8,9 +8,9 @@ function MoviesCard({
   const cardType = type;
   const currentUser = cardOwner;
   const isLiked = likes.some((i) => i === currentUser);
-  const cardMovieLikePlaceName = (`card__movie-like-place ${cardType === 'MovieCard' && 'card__movie-like-place_active'}`);
-  const cardSavedMovieDeleteName = (`card__saved-movie-delete-place ${cardType === 'SavedMovieCard' && 'card__saved-movie-delete-place_active'}`);
-  const cardLikeButtonClassName = (`card__heart-icon ${isLiked && 'card__heart-icon_liked'}`);
+  const cardMovieLikePlaceName = (`card__movie-like-place ${cardType === 'MovieCard' ? 'card__movie-like-place_active' : 'card__movie-like-place_non-active'}`);
+  const cardSavedMovieDeleteName = (`card__saved-movie-delete-place ${cardType === 'SavedMovieCard' ? 'card__saved-movie-delete-place_active' : 'card__saved-movie-delete-place_non-active'}`);
+  const cardLikeButtonClassName = (`card__heart-icon ${isLiked ? 'card__heart-icon_liked' : 'card__heart-icon_not-liked'}`);
 
   return (
     <article className="card">

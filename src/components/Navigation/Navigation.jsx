@@ -8,13 +8,13 @@ import { Link } from 'react-router-dom';
 function Navigation({ isOpen, onClose }) {
   const path = window.location.pathname;
   return (
-    <div className={`navigation ${isOpen === true && 'navigation_opened'}`}>
+    <div className={`navigation ${isOpen ? 'navigation_type_opened' : 'navigation_type_closed'}`}>
       <nav className="navigation__block">
         <button className="navigation__close-icon" type="button" aria-label="Закрыть" onClick={onClose} />
         <ul className="navigation__links">
           <Link to="/" className="navigation__link"><span className="navigation__link-text" onClick={onClose}>Главная</span></Link>
-          <Link to="/movies" className="navigation__link"><span className={`navigation__link-text ${path === '/movies' && 'navigation__link-text_type_active'}`} onClick={onClose}>Фильмы</span></Link>
-          <Link to="/saved-movies" className="navigation__link"><span className={`navigation__link-text ${path === '/saved-movies' && 'navigation__link-text_type_active'}`} onClick={onClose}>Сохранённые фильмы</span></Link>
+          <Link to="/movies" className="navigation__link"><span className={`navigation__link-text ${path === '/movies' ? 'navigation__link-text_type_active' : 'navigation__link-text_type_non-active'}`} onClick={onClose}>Фильмы</span></Link>
+          <Link to="/saved-movies" className="navigation__link"><span className={`navigation__link-text ${path === '/saved-movies' ? 'navigation__link-text_type_active' : 'navigation__link-text_type_non-active'}`} onClick={onClose}>Сохранённые фильмы</span></Link>
         </ul>
         <div className="navigation__account">
           <Link to="/profile" className="navigation__account-link" onClick={onClose}><span className={`navigation__link-text ${path === '/profile' && 'navigation__link-text_type_active'}`} onClick={onClose}>Аккаунт</span></Link>

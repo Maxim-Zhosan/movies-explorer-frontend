@@ -10,26 +10,28 @@ import savedMovies from '../../constants/savedMovies';
 
 function MoviesCardList() {
   const currentRoute = useLocation();
-  const limitMobile = 5;
-  const limitPad = 8;
-  const limitWeb = 16;
-  const limitFormula = window.innerWidth < 474 ? limitMobile : window.innerWidth < 1024 ? limitPad : limitWeb;
+  const limitFormula = window.innerWidth < 474 ? 5 : window.innerWidth < 1024 ? 8 : 16;
   const [limit, setLimit] = React.useState(limitFormula);
-  const addButtonClassName = (`movies-card-list__add-button ${limit >= movies.length && 'movies-card-list__add-button_non-active'}`);
-  const addButtonSMClassName = (`movies-card-list__add-button ${limit >= savedMovies.length && 'movies-card-list__add-button_non-active'}`);
+  const [addButtonClassName, setbuttonClassName] = React.useState(`movies-card-list__add-button ${limit >= movies.length && 'movies-card-list__add-button_non-active'}`);
+  const [addButtonSMClassName, setbuttonSMClassName] = React.useState(`movies-card-list__add-button ${limit >= savedMovies.length && 'movies-card-list__add-button_non-active'}`);
 
   React.useEffect(() => {
     const handleResize = (event) => {
-      setLimit(limitFormula);
+      setLimit(window.innerWidth < 474 ? 5 : window.innerWidth < 1024 ? 8 : 16);
     };
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  });
+
+  React.useEffect(() => {
+    setbuttonClassName(`movies-card-list__add-button ${limit >= movies.length && 'movies-card-list__add-button_non-active'}`);
+    setbuttonSMClassName(`movies-card-list__add-button ${limit >= savedMovies.length && 'movies-card-list__add-button_non-active'}`);
+  }, [limit]);
 
   function showMoreDocuments() {
-    setLimit(limit + limit);
+    setLimit(limit + limitFormula);
   }
 
   if (currentRoute.pathname === '/movies') {

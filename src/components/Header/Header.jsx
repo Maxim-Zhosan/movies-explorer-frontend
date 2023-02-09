@@ -11,10 +11,10 @@ function Header() {
   const [isNavOpened, setNav] = React.useState(false);
   const isLoggedIn = React.useContext(LoggedInContext);
   const currentRoute = useLocation();
-  const headerPlaceName = (`header ${currentRoute.pathname === '/' && 'header_type_main'}`);
-  const headerLinksPlaceName = (`header__links ${isLoggedIn === true && 'header__links_active'}`);
-  const headerAccountPlaceName = (`header__account ${isLoggedIn === true && 'header__account_active'}`);
-  const headerLoginPlaceName = (`header__login ${isLoggedIn === false && 'header__login_active'}`);
+  const headerPlaceName = (`header ${currentRoute.pathname === '/' ? 'header_type_main' : 'header_type_basic'}`);
+  const headerLinksPlaceName = (`header__links ${isLoggedIn === true ? 'header__links_active' : 'header__links_non-active'}`);
+  const headerAccountPlaceName = (`header__account ${isLoggedIn === true ? 'header__account_active' : 'header__account_non-active'}`);
+  const headerLoginPlaceName = (`header__login ${isLoggedIn === false ? 'header__login_active' : 'header__login_non-active'}`);
 
   function openNav() {
     setNav(true);

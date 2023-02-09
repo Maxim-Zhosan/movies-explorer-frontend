@@ -10,7 +10,7 @@ function SearchForm() {
 
   return (
     <section className="search">
-      <form onSubmit={handleSubmit} className="search__form" noValidate>
+      <form onSubmit={handleSubmit} className="search__form" required>
         <input type="text" className="search__input" placeholder="Фильм" name="movie" />
         <button type="submit" className="search__search-button" />
       </form>
