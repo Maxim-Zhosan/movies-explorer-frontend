@@ -2,7 +2,7 @@
   width: 100%;
   min-width: 320px;
   box-sizing: border-box;
-  padding: 0 70px;
+  padding: 0 calc((100vw - 1140px)/2);
   background-color: #202020;
   margin-top: auto;
 }

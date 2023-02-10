@@ -1,6 +1,6 @@
 .aboutme {
   display: flex;
-  padding: 110px 70px 100px;
+  padding: 110px calc((100vw - 1140px)/2) 100px;
   flex-direction: column;
   min-width: 292px;
   background-color: #202020;
@@ -81,6 +81,12 @@
   height: 327px;
   background-image: url('../../../images/aboutme-photo.png');
   border-radius: 10px;
+}
+
+@media (max-width: 1280px) {
+  .aboutme {
+    padding: 110px 70px 100px;
+  }
 }
 
 @media (max-width: 1023px) {
