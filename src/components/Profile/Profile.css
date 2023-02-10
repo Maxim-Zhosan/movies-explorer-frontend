@@ -1,0 +1,112 @@
+.account {
+  box-sizing: border-box;
+  min-width: 410px;
+  padding: 60px calc((100% - 410px)/2) 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: none;
+  min-height: 100vh;
+  background-color: #202020;
+}
+
+.account__form {
+  font-size: 0;
+}
+
+.account__title {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #FFFFFF;
+  margin: 0;
+  padding-bottom: 123px;
+  text-align: center;
+}
+
+.account__field {
+  display: flex;
+  border-bottom: 1px solid #424242;
+  padding: 0 0 16px;
+}
+
+.account__label {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  width: 100%;
+  margin: 0;
+  color: #FFFFFF;
+}
+
+.account__input {
+  position: relative;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  width: 100%;
+  margin: 0;
+  border: none;
+  color: #FFFFFF;
+  box-sizing: border-box;
+  background-color: transparent;
+  text-align: right;
+}
+
+.account__field:last-of-type {
+  border-bottom: none;
+  padding: 17px 0 220px;
+}
+
+.account__edit-button {
+  margin-bottom: 16px;
+  height: max-content;
+  width: 100%;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #FFFFFF;
+  background: transparent;
+  border-style: none;
+  cursor: pointer;
+  transition: ease-in 0.3s;
+}
+
+.account__edit-button:hover {
+  color: #3DDC84;
+}
+
+.account__logout-button {
+  height: max-content;
+  width: 100%;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #EE3465;
+  background: transparent;
+  border-style: none;
+  cursor: pointer;
+  transition: ease-in 0.3s;
+}
+
+.account__logout-button:hover {
+  color: #3DDC84;
+}
+
+@media (max-width: 474px) {
+  .account {
+    min-width: 320px;
+    padding: 70px 30px 40px;
+    min-height: calc(100vh - 57px)
+  }
+
+  .account__title {
+    padding-bottom: 80px;
+  }
+
+  .account__edit-button {
+    margin-top: auto;
+  }
+}

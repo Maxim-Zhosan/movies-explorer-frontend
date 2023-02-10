@@ -1,0 +1,129 @@
+.techs {
+  display: flex;
+  padding: 100px calc((100vw - 1140px)/2);
+  flex-direction: column;
+  min-width: 284px;
+  background-color: #272727;
+}
+
+.techs__title {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  color: #FFFFFF;
+  margin: 0;
+  padding-bottom: 23px;
+  border-bottom: 1px solid #DADADA;
+  letter-spacing: -0.04em;
+}
+
+.techs__description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.techs__description-title {
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  color: #FFFFFF;
+  margin: 0;
+  padding-top: 90px;
+  letter-spacing: -0.04em;
+}
+
+.techs__description-text {
+  max-width: 460px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #FFFFFF;
+  margin: 0;
+  padding-top: 26px;
+  text-align: center;
+  letter-spacing: -0.04em;
+}
+
+.techs__list {
+  display: grid;
+  padding-top: 100px;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, 90px);
+  column-gap: 10px;
+  row-gap: 10px;
+  text-align: center;
+  justify-content: center;
+}
+
+.techs__item {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 60px;
+  color: #FFFFFF;
+  margin: 0;
+  letter-spacing: -0.04em;
+  background-color: #303030;
+  border-radius: 10px;
+}
+
+@media (max-width: 1280px) {
+  .techs {
+    padding: 100px 70px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .techs {
+    padding: 90px 50px;
+  }
+
+  .techs__description-title {
+    padding-top: 80px;
+  }
+
+  .techs__description-text {
+    padding-top: 22px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .techs__list {
+    padding-top: 83px;
+    grid-template-columns: repeat(auto-fit, 84px);
+  }
+
+  .techs__item {
+    font-size: 12px;
+    line-height: 57px;
+  }
+}
+
+@media (max-width: 474px) {
+  .techs {
+    padding: 70px 18px;
+  }
+
+  .techs__title {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 28px;
+  }
+
+  .techs__description-title {
+    font-size: 30px;
+    line-height: 36px;
+    padding-top: 60px;
+  }
+
+  .techs__list {
+    padding-top: 50px;
+    width: 270px;
+  }
+
+  .techs__description-text {
+    padding-top: 24px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+}
