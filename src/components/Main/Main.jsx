@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import './Main.css';
-import React from 'react';
+import React, { useRef } from 'react';
 import Header from '../Header/Header';
 import Promo from './Promo/Promo';
 import NavTab from './NavTab/NavTab';
@@ -11,9 +11,9 @@ import Portfolio from './Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
 function Main() {
-  const projectRef = React.useRef();
-  const techRef = React.useRef();
-  const aboutMeRef = React.useRef();
+  const projectRef = useRef();
+  const techRef = useRef();
+  const aboutMeRef = useRef();
 
   function scrollToProject() {
     projectRef.current.scrollIntoView({ behavior: 'smooth' });

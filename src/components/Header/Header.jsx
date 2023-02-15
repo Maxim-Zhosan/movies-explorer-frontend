@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable consistent-return */
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Header.css';
 import { useLocation, Link } from 'react-router-dom';
 import LoggedInContext from '../../contexts/LoggedInContext';
@@ -8,8 +8,8 @@ import Navigation from '../Navigation/Navigation';
 import logo from '../../images/logo.svg';
 
 function Header() {
-  const [isNavOpened, setNav] = React.useState(false);
-  const isLoggedIn = React.useContext(LoggedInContext);
+  const [isNavOpened, setNav] = useState(false);
+  const isLoggedIn = useContext(LoggedInContext);
   const currentRoute = useLocation();
   const headerPlaceName = (`header ${currentRoute.pathname === '/' ? 'header_type_main' : 'header_type_basic'}`);
   const headerLinksPlaceName = (`header__links ${isLoggedIn === true ? 'header__links_active' : 'header__links_non-active'}`);
@@ -24,7 +24,7 @@ function Header() {
     setNav(false);
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     function closeByEscape(evt) {
       if (evt.key === 'Escape') {
         closeNav();

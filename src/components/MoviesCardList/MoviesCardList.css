@@ -41,6 +41,23 @@
   display: none;
 }
 
+.movies-card-list__no-found {
+  width: max-content;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.2px;
+  color: #8B8B8B;
+  margin: 0;
+  text-align: center;
+  letter-spacing: -0.04em;
+  visibility: hidden;
+  margin: auto;
+}
+
+.movies-card-list__no-found_active {
+  visibility: visible;
+}
+
 @media (max-width: 1280px) {
   .movies-card-list {
     padding: 70px 70px 0;
