@@ -58,8 +58,68 @@ export function setUserInfo(data) {
     credentials: 'include',
     body: JSON.stringify({
       name: data.name,
-      about: data.about,
+      email: data.email,
     }),
   })
     .then((res) => getJsonOrError(res));
+}
+
+export function logout() {
+  return fetch(`${URLMA}/signout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  })
+    .then((res) => getJsonOrError(res));
+}
+
+export function getSavedMovies() {
+  return fetch(`${URLMA}/movies`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => getJsonOrError(res));
+}
+
+export function deleteSavedMovie(savedMovieId) {
+  return fetch(`${URLMA}/movies/${savedMovieId}`, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => getJsonOrError(res));
+}
+
+export function addSavedMovie(movie, isMovieLiked, savedMovieId) {
+  if (!isMovieLiked) {
+    return fetch(`${URLMA}/movies`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: movie.image.url,
+        trailerLink: movie.trailerLink,
+        thumbnail: movie.image.formats.thumbnail.url,
+        movieId: movie.id,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+      }),
+    })
+      .then((res) => getJsonOrError(res));
+  }
+  return deleteSavedMovie(savedMovieId);
 }

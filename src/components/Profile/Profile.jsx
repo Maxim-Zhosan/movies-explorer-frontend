@@ -8,7 +8,7 @@ import './Profile.css';
 import Header from '../Header/Header';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Profile({ handleChangeProfileInfo, profileError }) {
+function Profile({ handleChangeProfileInfo, handleLogout, profileError }) {
   const currentUser = useContext(CurrentUserContext);
   const nameRegex = /^[a-zA-zа-яА-я0-9-\s]*$/i;
   const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.].*$/i;
@@ -44,15 +44,13 @@ function Profile({ handleChangeProfileInfo, profileError }) {
     } else {
       setSubmitButtonClass('account__edit-button account__edit-button_disabled');
     }
-  }, [nameInputValue, emailInputValue]);
+  }, [nameInputValue, emailInputValue, currentUser]);
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!nameInputValue || !emailInputValue) {
       return;
     }
-    setNameInputValue('');
-    setEmailInputValue('');
     handleChangeProfileInfo({
       name: nameInputValue,
       email: emailInputValue,
@@ -78,7 +76,7 @@ function Profile({ handleChangeProfileInfo, profileError }) {
           </div>
           <span className={errorMessageClass}>Что-то пошло не так...</span>
           <button type="submit" className={submitButtonClass}>Редактировать</button>
-          <button type="button" className="account__logout-button">Выйти из аккаунта</button>
+          <button type="button" className="account__logout-button" onClick={handleLogout}>Выйти из аккаунта</button>
         </form>
       </div>
     </div>

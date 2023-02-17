@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-no-bind */
 import React, { useState } from 'react';
@@ -7,33 +8,17 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
-import moviesApi from '../../utils/MoviesApi';
 
-function Movies() {
+function Movies({
+  onMovieLike, getMoviesFromApi, apiMovies, savedMovies,
+}) {
   const [isPreloaderActive, setPreloaderStatus] = useState(false);
-  const [movies, loadMovies] = useState([]);
-  const [noFoundMessageName, setNoFoundMessageName] = React.useState('movies-card-list__no-found');
-
-  function filterMovies(request, movie, isShortMovie) {
-    if (isShortMovie) {
-      return movie.duration < 40 && (movie.nameRU.toLowerCase().includes(request.toLowerCase()) || movie.nameEN.toLowerCase().includes(request.toLowerCase()));
-    }
-    return movie.nameRU.toLowerCase().includes(request.toLowerCase()) || movie.nameEN.toLowerCase().includes(request.toLowerCase());
-  }
+  const [noFoundMessage, setNoFoundMessage] = useState(false);
+  const cardType = 'MovieCard';
 
   function searchMovies(request, isShortMovie) {
     setPreloaderStatus(true);
-    loadMovies([]);
-    setNoFoundMessageName('movies-card-list__no-found');
-    moviesApi.searchMovies(movies)
-      .then((res) => {
-        const filteredMovies = res.filter((movie) => filterMovies(request, movie, isShortMovie));
-        loadMovies(filteredMovies);
-        setPreloaderStatus(false);
-        setNoFoundMessageName(`movies-card-list__no-found ${filteredMovies.length === 0 && 'movies-card-list__no-found_active'}`);
-        console.log(filteredMovies);
-      })
-      .catch((err) => console.log(err));
+    getMoviesFromApi(request, isShortMovie, setPreloaderStatus, setNoFoundMessage);
   }
 
   return (
@@ -41,7 +26,7 @@ function Movies() {
       <Header />
       <SearchForm searchMovies={searchMovies} />
       <Preloader isActive={isPreloaderActive} />
-      <MoviesCardList movies={movies} noFoundMessageName={noFoundMessageName} />
+      <MoviesCardList movies={apiMovies} savedMovies={savedMovies} cardType={cardType} onMovieLike={onMovieLike} noFoundMessage={noFoundMessage} />
       <Footer />
     </main>
   );
