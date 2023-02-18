@@ -10,7 +10,7 @@ import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
 function Movies({
-  onMovieLike, getMoviesFromApi, apiMovies, savedMovies,
+  currentUser, onMovieLike, getMoviesFromApi, apiMovies, savedMovies,
 }) {
   const [isPreloaderActive, setPreloaderStatus] = useState(false);
   const [noFoundMessage, setNoFoundMessage] = useState(false);
@@ -33,7 +33,7 @@ function Movies({
       <Header />
       <SearchForm searchMovies={searchMovies} />
       <Preloader isActive={isPreloaderActive} />
-      <MoviesCardList movies={apiMovies} savedMovies={savedMovies} cardType={cardType} onMovieLike={onMovieLike} noFoundMessage={noFoundMessage} />
+      <MoviesCardList currentUser={currentUser} movies={apiMovies} savedMovies={savedMovies} cardType={cardType} onMovieLike={onMovieLike} noFoundMessage={noFoundMessage} />
       <Footer />
     </main>
   );

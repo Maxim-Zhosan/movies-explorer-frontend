@@ -1,3 +1,5 @@
+/* eslint-disable no-else-return */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable no-unneeded-ternary */
 /* eslint-disable react/prop-types */
@@ -9,7 +11,7 @@ import React, { useState, useEffect } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
 function MoviesCardList({
-  movies, savedMovies, cardType, onMovieLike, onDeleteMovie, noFoundMessage,
+  currentUser, movies, savedMovies, cardType, onMovieLike, onDeleteMovie, noFoundMessage,
 }) {
   const noFoundMessageName = `movies-card-list__no-found ${noFoundMessage && 'movies-card-list__no-found_active'}`;
   const limitFormula = window.innerWidth < 474 ? 5 : window.innerWidth < 1024 ? 8 : 16;
@@ -27,35 +29,59 @@ function MoviesCardList({
   }, [window.innerWidth]);
 
   useEffect(() => {
-    setbuttonClassName(`movies-card-list__add-button ${limit >= movies.length && 'movies-card-list__add-button_non-active'}`);
+    setbuttonClassName(`movies-card-list__add-button ${cardType === 'MovieCard' ? limit >= movies.length && 'movies-card-list__add-button_non-active' : limit >= movies.filter((movie) => movie.owner === currentUser._id).length && 'movies-card-list__add-button_non-active'}`);
   }, [movies, limit]);
 
   function showMoreDocuments() {
     setLimit(limit + limitFormula);
   }
 
-  return (
-    <main className="movies-card-list">
-      <div className="movies-card-list__list">
-        {movies.slice(0, limit).map((movie) => (
-          <MoviesCard
-            id={movie.id ? movie.id : movie.movieId}
-            name={movie.nameRU}
-            link={movie.trailerLink}
-            image={movie.image.url ? movie.image.url : movie.image}
-            duration={movie.duration}
-            movie={movie}
-            cardType={cardType}
-            onMovieLike={onMovieLike}
-            onDeleteMovie={onDeleteMovie}
-            isLiked={(savedMovies.find((obj) => obj.movieId === movie.id)) ? true : false}
-          />
-        ))}
-      </div>
-      <p className={noFoundMessageName}>Фильмы по данному запросу отсутствуют</p>
-      <button className={addButtonClassName} type="button" aria-label="Меню" onClick={showMoreDocuments}>Ещё</button>
-    </main>
-  );
+  if (cardType === 'MovieCard') {
+    return (
+      <main className="movies-card-list">
+        <div className="movies-card-list__list">
+          {movies.slice(0, limit).map((movie) => (
+            <MoviesCard
+              id={movie.id}
+              name={movie.nameRU}
+              link={movie.trailerLink}
+              image={movie.image.url}
+              duration={movie.duration}
+              movie={movie}
+              cardType={cardType}
+              onMovieLike={onMovieLike}
+              onDeleteMovie={onDeleteMovie}
+              isLiked={(savedMovies.find((obj) => obj.movieId === movie.id && obj.owner === currentUser._id)) ? true : false}
+            />
+          ))}
+        </div>
+        <p className={noFoundMessageName}>Фильмы по данному запросу отсутствуют</p>
+        <button className={addButtonClassName} type="button" aria-label="Меню" onClick={showMoreDocuments}>Ещё</button>
+      </main>
+    );
+  } else {
+    return (
+      <main className="movies-card-list">
+        <div className="movies-card-list__list">
+          {movies.filter((movie) => movie.owner === currentUser._id).slice(0, limit).map((movie) => (
+            <MoviesCard
+              id={movie.movieId}
+              name={movie.nameRU}
+              link={movie.trailerLink}
+              image={movie.image}
+              duration={movie.duration}
+              movie={movie}
+              cardType={cardType}
+              onMovieLike={onMovieLike}
+              onDeleteMovie={onDeleteMovie}
+            />
+          ))}
+        </div>
+        <p className={noFoundMessageName}>Фильмы по данному запросу отсутствуют</p>
+        <button className={addButtonClassName} type="button" aria-label="Меню" onClick={showMoreDocuments}>Ещё</button>
+      </main>
+    );
+  }
 }
 
 export default MoviesCardList;

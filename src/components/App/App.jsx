@@ -125,6 +125,7 @@ function App() {
       .then((res) => {
         if (res) {
           loadSavedMovies(res);
+          console.log(res);
         }
       })
       .catch((err) => {
@@ -167,6 +168,7 @@ function App() {
           setIsLoggedIn(true);
           setCurrentUser(res);
           loadSavedMoviesList();
+          console.log(res);
         })
         .catch((err) => console.log(err));
     }
@@ -187,8 +189,8 @@ function App() {
       <LoggedInContext.Provider value={isLoggedIn}>
         <div className="page">
           <Routes>
-            <Route exact path="/movies" element={<ProtectedRoute component={<Movies savedMovies={savedMovies} onMovieLike={onMovieLike} apiMovies={apiMovies} getMoviesFromApi={getMoviesFromApi} />} />} />
-            <Route exact path="/saved-movies" element={<ProtectedRoute component={<SavedMovies savedMovies={savedMovies} loadSavedMoviesList={loadSavedMoviesList} onDeleteMovie={onDeleteMovie} getMoviesFromSaved={getMoviesFromSaved} />} />} />
+            <Route exact path="/movies" element={<ProtectedRoute component={<Movies currentUser={currentUser} savedMovies={savedMovies} onMovieLike={onMovieLike} apiMovies={apiMovies} getMoviesFromApi={getMoviesFromApi} />} />} />
+            <Route exact path="/saved-movies" element={<ProtectedRoute component={<SavedMovies currentUser={currentUser} savedMovies={savedMovies} loadSavedMoviesList={loadSavedMoviesList} onDeleteMovie={onDeleteMovie} getMoviesFromSaved={getMoviesFromSaved} />} />} />
             <Route exact path="/profile" element={<ProtectedRoute component={<Profile handleChangeProfileInfo={handleChangeProfileInfo} handleLogout={handleLogout} profileError={profileError} setProfileError={setProfileError} profileSuccess={profileSuccess} setProfileSuccess={setProfileSuccess} />} />} />
             <Route exact path="/" element={<Main />} />
             <Route exact path="/signin" element={<Login handleLogin={handleLogin} loginError={loginError} />} />

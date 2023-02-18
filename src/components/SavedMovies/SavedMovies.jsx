@@ -10,7 +10,7 @@ import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
 function SavedMovies({
-  savedMovies, onDeleteMovie, getMoviesFromSaved, loadSavedMoviesList,
+  currentUser, savedMovies, onDeleteMovie, getMoviesFromSaved, loadSavedMoviesList,
 }) {
   const [isPreloaderActive, setPreloaderStatus] = useState(false);
   const [noFoundMessage, setNoFoundMessage] = useState(false);
@@ -37,7 +37,7 @@ function SavedMovies({
       <Header />
       <SearchForm searchMovies={searchMovies} />
       <Preloader isActive={isPreloaderActive} />
-      <MoviesCardList movies={savedMovies} savedMovies={savedMovies} cardType={cardType} onDeleteMovie={onDeleteMovie} noFoundMessage={noFoundMessage} />
+      <MoviesCardList currentUser={currentUser} movies={savedMovies} savedMovies={savedMovies} cardType={cardType} onDeleteMovie={onDeleteMovie} noFoundMessage={noFoundMessage} />
       <Footer />
     </main>
   );
