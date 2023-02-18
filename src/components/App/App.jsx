@@ -77,6 +77,7 @@ function App() {
         if (res) {
           setProfileError(false);
           setIsLoggedIn(false);
+          localStorage.removeItem('searchResult');
         }
       })
       .catch((err) => {
@@ -101,6 +102,9 @@ function App() {
         }
         const filteredMovies = res.filter((movie) => filterMovies(request, movie, isShortMovie));
         loadMovies(filteredMovies);
+        localStorage.setItem('searchResult', JSON.stringify({
+          request, isShortMovie,
+        }));
         setPreloaderStatus(false);
         console.log(filteredMovies);
       })

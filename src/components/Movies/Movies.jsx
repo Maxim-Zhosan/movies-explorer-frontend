@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-no-bind */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Movies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
@@ -20,6 +20,13 @@ function Movies({
     setPreloaderStatus(true);
     getMoviesFromApi(request, isShortMovie, setPreloaderStatus, setNoFoundMessage);
   }
+
+  useEffect(() => {
+    const searchResult = JSON.parse(localStorage.getItem('searchResult'));
+    if (searchResult) {
+      searchMovies(searchResult.request, searchResult.isShortMovie);
+    }
+  }, []);
 
   return (
     <main className="movies">
