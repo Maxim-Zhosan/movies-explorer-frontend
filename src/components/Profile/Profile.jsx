@@ -8,7 +8,9 @@ import './Profile.css';
 import Header from '../Header/Header';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Profile({ handleChangeProfileInfo, handleLogout, profileError }) {
+function Profile({
+  handleChangeProfileInfo, handleLogout, profileError, profileSuccess, setProfileError, setProfileSuccess,
+}) {
   const currentUser = useContext(CurrentUserContext);
   const nameRegex = /^[a-zA-zа-яА-я0-9-\s]*$/i;
   const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.].*$/i;
@@ -16,6 +18,7 @@ function Profile({ handleChangeProfileInfo, handleLogout, profileError }) {
   const [emailInputValue, setEmailInputValue] = useState(currentUser.email);
   const [submitButtonClass, setSubmitButtonClass] = useState('account__button account__button_disabled');
   const errorMessageClass = `account__input-error account__input-error_type_submit ${profileError && 'account__input-error_active'}`;
+  const successMessageClass = `account__update-profile-success-message ${profileSuccess && 'account__update-profile-success-message_active'}`;
 
   function onChangeInput(e) {
     if (e.target.name === 'name') {
@@ -46,6 +49,11 @@ function Profile({ handleChangeProfileInfo, handleLogout, profileError }) {
     }
   }, [nameInputValue, emailInputValue, currentUser]);
 
+  useEffect(() => {
+    setProfileError(false);
+    setProfileSuccess(false);
+  }, []);
+
   function handleSubmit(e) {
     e.preventDefault();
     if (!nameInputValue || !emailInputValue) {
@@ -75,6 +83,7 @@ function Profile({ handleChangeProfileInfo, handleLogout, profileError }) {
             <span className="account__input-error account__input-error_type_email">Введите корректный e-mail</span>
           </div>
           <span className={errorMessageClass}>Что-то пошло не так...</span>
+          <span className={successMessageClass}>Данные пользователя успешно обновлены</span>
           <button type="submit" className={submitButtonClass}>Редактировать</button>
           <button type="button" className="account__logout-button" onClick={handleLogout}>Выйти из аккаунта</button>
         </form>

@@ -82,6 +82,24 @@
   text-align: right;
 }
 
+.account__update-profile-success-message {
+    display: block;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    width: 100%;
+    border: none;
+    color: #3DDC84;
+    margin: 2px 0 18px;
+    min-height: 16px;
+    visibility: hidden;
+    text-align: center;
+}
+
+.account__update-profile-success-message_active {
+  visibility: visible;
+}
+
 .account__input-error_type_submit {
   text-align: center;
   margin: 2px 0 18px;

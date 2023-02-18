@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-no-bind */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { useNavigate, Route, Routes } from 'react-router-dom';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
@@ -23,6 +23,7 @@ function App() {
   const [registerError, setRegisterError] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [profileError, setProfileError] = useState(false);
+  const [profileSuccess, setProfileSuccess] = useState(false);
   const [savedMovies, loadSavedMovies] = useState([]);
   const [apiMovies, loadMovies] = useState([]);
   const history = useNavigate();
@@ -58,10 +59,12 @@ function App() {
   }
 
   function handleChangeProfileInfo(data) {
+    setProfileError(false);
+    setProfileSuccess(false);
     mainApi.setUserInfo(data)
       .then((res) => {
         if (res) {
-          setProfileError(false);
+          setProfileSuccess(true);
           setCurrentUser(data);
         }
       })
@@ -157,7 +160,7 @@ function App() {
       });
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isLoggedIn) {
       mainApi.checkToken()
         .then((res) => {
@@ -169,7 +172,7 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     mainApi.checkToken()
       .then((res) => {
         if (res) {
@@ -186,7 +189,7 @@ function App() {
           <Routes>
             <Route exact path="/movies" element={<ProtectedRoute component={<Movies savedMovies={savedMovies} onMovieLike={onMovieLike} apiMovies={apiMovies} getMoviesFromApi={getMoviesFromApi} />} />} />
             <Route exact path="/saved-movies" element={<ProtectedRoute component={<SavedMovies savedMovies={savedMovies} loadSavedMoviesList={loadSavedMoviesList} onDeleteMovie={onDeleteMovie} getMoviesFromSaved={getMoviesFromSaved} />} />} />
-            <Route exact path="/profile" element={<ProtectedRoute component={<Profile handleChangeProfileInfo={handleChangeProfileInfo} handleLogout={handleLogout} profileError={profileError} />} />} />
+            <Route exact path="/profile" element={<ProtectedRoute component={<Profile handleChangeProfileInfo={handleChangeProfileInfo} handleLogout={handleLogout} profileError={profileError} setProfileError={setProfileError} profileSuccess={profileSuccess} setProfileSuccess={setProfileSuccess} />} />} />
             <Route exact path="/" element={<Main />} />
             <Route exact path="/signin" element={<Login handleLogin={handleLogin} loginError={loginError} />} />
             <Route exact path="/signup" element={<Register handleRegister={handleRegister} registerError={registerError} />} />
