@@ -114,18 +114,18 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function getMoviesFromSaved(request, isShortMovie) {
-    const filteredSavedMovies = savedMovies.filter((movie) => filterMovies(request, movie, isShortMovie));
-    loadSavedMovies(filteredSavedMovies);
-  }
-
-  function loadSavedMoviesList() {
+  function loadSavedMoviesList(request, isShortMovie) {
     loadMovies([]);
     mainApi.getSavedMovies()
       .then((res) => {
         if (res) {
-          loadSavedMovies(res);
-          console.log(res);
+          if (request) {
+            const filteredSavedMovies = res.filter((movie) => filterMovies(request, movie, isShortMovie));
+            loadSavedMovies(filteredSavedMovies);
+          } else {
+            loadSavedMovies(res);
+            console.log(res);
+          }
         }
       })
       .catch((err) => {
@@ -190,7 +190,7 @@ function App() {
         <div className="page">
           <Routes>
             <Route exact path="/movies" element={<ProtectedRoute component={<Movies currentUser={currentUser} savedMovies={savedMovies} onMovieLike={onMovieLike} apiMovies={apiMovies} getMoviesFromApi={getMoviesFromApi} />} />} />
-            <Route exact path="/saved-movies" element={<ProtectedRoute component={<SavedMovies currentUser={currentUser} savedMovies={savedMovies} loadSavedMoviesList={loadSavedMoviesList} onDeleteMovie={onDeleteMovie} getMoviesFromSaved={getMoviesFromSaved} />} />} />
+            <Route exact path="/saved-movies" element={<ProtectedRoute component={<SavedMovies currentUser={currentUser} savedMovies={savedMovies} loadSavedMoviesList={loadSavedMoviesList} onDeleteMovie={onDeleteMovie} />} />} />
             <Route exact path="/profile" element={<ProtectedRoute component={<Profile handleChangeProfileInfo={handleChangeProfileInfo} handleLogout={handleLogout} profileError={profileError} setProfileError={setProfileError} profileSuccess={profileSuccess} setProfileSuccess={setProfileSuccess} />} />} />
             <Route exact path="/" element={<Main />} />
             <Route exact path="/signin" element={<Login handleLogin={handleLogin} loginError={loginError} />} />

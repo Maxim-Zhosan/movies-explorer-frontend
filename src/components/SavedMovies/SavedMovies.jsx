@@ -10,7 +10,7 @@ import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
 function SavedMovies({
-  currentUser, savedMovies, onDeleteMovie, getMoviesFromSaved, loadSavedMoviesList,
+  currentUser, savedMovies, onDeleteMovie, loadSavedMoviesList,
 }) {
   const [isPreloaderActive, setPreloaderStatus] = useState(false);
   const [noFoundMessage, setNoFoundMessage] = useState(false);
@@ -18,7 +18,7 @@ function SavedMovies({
 
   function searchMovies(request, isShortMovie) {
     setPreloaderStatus(true);
-    getMoviesFromSaved(request, isShortMovie);
+    loadSavedMoviesList(request, isShortMovie);
     setPreloaderStatus(false);
   }
 
