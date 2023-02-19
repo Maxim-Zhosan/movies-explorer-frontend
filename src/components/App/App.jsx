@@ -116,7 +116,6 @@ function App() {
   }
 
   function loadSavedMoviesList(request, isShortMovie) {
-    loadMovies([]);
     mainApi.getSavedMovies()
       .then((res) => {
         if (res) {
@@ -185,18 +184,6 @@ function App() {
       })
       .catch((err) => console.log(err));
   }, [isLoading]);
-
-  // function checkLoginAndEnter() {
-  //   mainApi.checkToken()
-  //     .then((res) => {
-  //       if (res) {
-  //         setIsLoggedIn(true);
-  //         setIsLoading(false);
-  //         console.log(isLoggedIn);
-  //       } else { history('/'); }
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

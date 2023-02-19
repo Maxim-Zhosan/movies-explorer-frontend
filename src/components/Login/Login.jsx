@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+import LoggedInContext from '../../contexts/LoggedInContext';
 import './Login.css';
-import { Link } from 'react-router-dom';
 
 function Login({ handleLogin, loginError }) {
+  const isLoggedIn = useContext(LoggedInContext);
   const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.].*$/i;
   const [emailInputValue, setEmailInputValue] = useState('');
   const [passInputValue, setPassInputValue] = useState('');
@@ -47,27 +49,28 @@ function Login({ handleLogin, loginError }) {
   }
 
   return (
-    <div className="login">
-      <Link to="/" className="login__logo-link" />
-      <h1 className="login__title">
-        Рады видеть!
-      </h1>
-      <form className="login__form" onSubmit={handleSubmit}>
-        <label htmlFor="email" className="login__label">E-mail</label>
-        <input required className="login__input" type="email" name="email" id="email" value={emailInputValue} onChange={(e) => onChangeInput(e)} />
-        <span className="login__input-error login__input-error_type_email">Введите корректный e-mail</span>
-        <label className="login__label" htmlFor="password">Пароль</label>
-        <input required className="login__input" type="password" name="password" id="password" value={passInputValue} onChange={(e) => onChangeInput(e)} />
-        <span className="login__input-error login__input-error_type_password" />
-        <span className={errorMessageClass}>Неправильная почта или пароль</span>
-        <button type="submit" className={submitButtonClass}>Войти</button>
-      </form>
-      <p className="login__text">
-        Ещё не зарегистрированы?
-        <a className="login__signup-link" href="/signup"> Регистрация</a>
-      </p>
-    </div>
-  );
+    isLoggedIn ? <Navigate to="/" /> : (
+      <div className="login">
+        <Link to="/" className="login__logo-link" />
+        <h1 className="login__title">
+          Рады видеть!
+        </h1>
+        <form className="login__form" onSubmit={handleSubmit}>
+          <label htmlFor="email" className="login__label">E-mail</label>
+          <input required className="login__input" type="email" name="email" id="email" value={emailInputValue} onChange={(e) => onChangeInput(e)} />
+          <span className="login__input-error login__input-error_type_email">Введите корректный e-mail</span>
+          <label className="login__label" htmlFor="password">Пароль</label>
+          <input required className="login__input" type="password" name="password" id="password" value={passInputValue} onChange={(e) => onChangeInput(e)} />
+          <span className="login__input-error login__input-error_type_password" />
+          <span className={errorMessageClass}>Неправильная почта или пароль</span>
+          <button type="submit" className={submitButtonClass}>Войти</button>
+        </form>
+        <p className="login__text">
+          Ещё не зарегистрированы?
+          <a className="login__signup-link" href="/signup"> Регистрация</a>
+        </p>
+      </div>
+    ));
 }
 
 export default Login;
