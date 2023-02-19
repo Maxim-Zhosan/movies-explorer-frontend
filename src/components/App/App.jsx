@@ -19,6 +19,7 @@ import moviesApi from '../../utils/MoviesApi';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
   const [registerError, setRegisterError] = useState(false);
   const [loginError, setLoginError] = useState(false);
@@ -179,19 +180,32 @@ function App() {
       .then((res) => {
         if (res) {
           setIsLoggedIn(true);
-        }
+          setIsLoading(false);
+        } else { history('/'); }
       })
       .catch((err) => console.log(err));
-  }, [history]);
+  }, [isLoading]);
+
+  // function checkLoginAndEnter() {
+  //   mainApi.checkToken()
+  //     .then((res) => {
+  //       if (res) {
+  //         setIsLoggedIn(true);
+  //         setIsLoading(false);
+  //         console.log(isLoggedIn);
+  //       } else { history('/'); }
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <LoggedInContext.Provider value={isLoggedIn}>
         <div className="page">
           <Routes>
-            <Route exact path="/movies" element={<ProtectedRoute component={<Movies currentUser={currentUser} savedMovies={savedMovies} onMovieLike={onMovieLike} apiMovies={apiMovies} getMoviesFromApi={getMoviesFromApi} />} />} />
-            <Route exact path="/saved-movies" element={<ProtectedRoute component={<SavedMovies currentUser={currentUser} savedMovies={savedMovies} loadSavedMoviesList={loadSavedMoviesList} onDeleteMovie={onDeleteMovie} />} />} />
-            <Route exact path="/profile" element={<ProtectedRoute component={<Profile handleChangeProfileInfo={handleChangeProfileInfo} handleLogout={handleLogout} profileError={profileError} setProfileError={setProfileError} profileSuccess={profileSuccess} setProfileSuccess={setProfileSuccess} />} />} />
+            <Route exact path="/movies" element={<ProtectedRoute isLoading={isLoading} element={<Movies currentUser={currentUser} savedMovies={savedMovies} onMovieLike={onMovieLike} apiMovies={apiMovies} getMoviesFromApi={getMoviesFromApi} />} />} />
+            <Route exact path="/saved-movies" element={<ProtectedRoute isLoading={isLoading} element={<SavedMovies currentUser={currentUser} savedMovies={savedMovies} loadSavedMoviesList={loadSavedMoviesList} onDeleteMovie={onDeleteMovie} />} />} />
+            <Route exact path="/profile" element={<ProtectedRoute isLoading={isLoading} element={<Profile handleChangeProfileInfo={handleChangeProfileInfo} handleLogout={handleLogout} profileError={profileError} setProfileError={setProfileError} profileSuccess={profileSuccess} setProfileSuccess={setProfileSuccess} />} />} />
             <Route exact path="/" element={<Main />} />
             <Route exact path="/signin" element={<Login handleLogin={handleLogin} loginError={loginError} />} />
             <Route exact path="/signup" element={<Register handleRegister={handleRegister} registerError={registerError} />} />

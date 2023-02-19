@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/prop-types */
@@ -14,8 +15,8 @@ function Profile({
   const currentUser = useContext(CurrentUserContext);
   const nameRegex = /^[a-zA-zа-яА-я0-9-\s]*$/i;
   const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.].*$/i;
-  const [nameInputValue, setNameInputValue] = useState(currentUser.name);
-  const [emailInputValue, setEmailInputValue] = useState(currentUser.email);
+  const [nameInputValue, setNameInputValue] = useState(currentUser.name || '');
+  const [emailInputValue, setEmailInputValue] = useState(currentUser.email || '');
   const [submitButtonClass, setSubmitButtonClass] = useState('account__button account__button_disabled');
   const errorMessageClass = `account__input-error account__input-error_type_submit ${profileError && 'account__input-error_active'}`;
   const successMessageClass = `account__update-profile-success-message ${profileSuccess && 'account__update-profile-success-message_active'}`;
@@ -47,7 +48,12 @@ function Profile({
     } else {
       setSubmitButtonClass('account__edit-button account__edit-button_disabled');
     }
-  }, [nameInputValue, emailInputValue, currentUser]);
+  }, [nameInputValue, emailInputValue]);
+
+  useEffect(() => {
+    setNameInputValue(currentUser.name || '');
+    setEmailInputValue(currentUser.email || '');
+  }, [currentUser]);
 
   useEffect(() => {
     setProfileError(false);
@@ -60,6 +66,7 @@ function Profile({
       return;
     }
     handleChangeProfileInfo({
+      _id: currentUser._id,
       name: nameInputValue,
       email: emailInputValue,
     });
@@ -74,12 +81,12 @@ function Profile({
         <form className="account__form" onSubmit={handleSubmit}>
           <div className="account__field">
             <label className="account__label" htmlFor="name">Имя</label>
-            <input required className="account__input" type="text" value={nameInputValue} name="name" id="name" onChange={(e) => onChangeInput(e)} />
+            <input required className="account__input" type="text" value={nameInputValue || currentUser.name} name="name" id="name" onChange={(e) => onChangeInput(e)} />
             <span className="account__input-error account__input-error_type_name">Доступные символы: Аа-Zz, Аа-Яя, пробел и дефис</span>
           </div>
           <div className="account__field">
             <label className="account__label" htmlFor="email">E-mail</label>
-            <input required className="account__input" type="text" value={emailInputValue} name="email" id="email" onChange={(e) => onChangeInput(e)} />
+            <input required className="account__input" type="text" value={emailInputValue || currentUser.email} name="email" id="email" onChange={(e) => onChangeInput(e)} />
             <span className="account__input-error account__input-error_type_email">Введите корректный e-mail</span>
           </div>
           <span className={errorMessageClass}>Что-то пошло не так...</span>

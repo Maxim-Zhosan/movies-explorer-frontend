@@ -25,6 +25,8 @@ function SavedMovies({
   useEffect(() => {
     if (savedMovies.length === 0) {
       setNoFoundMessage(true);
+    } else {
+      setNoFoundMessage(false);
     }
   }, [savedMovies]);
 

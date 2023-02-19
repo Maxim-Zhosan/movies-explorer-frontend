@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable prefer-promise-reject-errors */
 import { URLMA } from './constants';
 
@@ -57,6 +58,7 @@ export function setUserInfo(data) {
     },
     credentials: 'include',
     body: JSON.stringify({
+      _id: data._id,
       name: data.name,
       email: data.email,
     }),
