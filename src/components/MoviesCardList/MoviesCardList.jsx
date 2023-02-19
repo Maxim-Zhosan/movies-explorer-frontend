@@ -9,18 +9,19 @@
 import './MoviesCardList.css';
 import React, { useState, useEffect } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import { moviesDisplayAmount } from '../../utils/constants';
 
 function MoviesCardList({
   currentUser, movies, savedMovies, cardType, onMovieLike, onDeleteMovie, noFoundMessage,
 }) {
   const noFoundMessageName = `movies-card-list__no-found ${noFoundMessage && 'movies-card-list__no-found_active'}`;
-  const limitFormula = window.innerWidth < 474 ? 5 : window.innerWidth < 1024 ? 8 : 16;
+  const limitFormula = window.innerWidth < 474 ? moviesDisplayAmount.mobile : window.innerWidth < 1024 ? moviesDisplayAmount.tab : moviesDisplayAmount.desktop;
   const [limit, setLimit] = useState(limitFormula);
   const [addButtonClassName, setbuttonClassName] = useState(`movies-card-list__add-button ${limit >= movies.length && 'movies-card-list__add-button_non-active'}`);
 
   useEffect(() => {
     const handleResize = (event) => {
-      setTimeout(() => setLimit(window.innerWidth < 474 ? 5 : window.innerWidth < 1024 ? 8 : 16), 1000);
+      setTimeout(() => setLimit(window.innerWidth < 474 ? moviesDisplayAmount.mobile : window.innerWidth < 1024 ? moviesDisplayAmount.tab : moviesDisplayAmount.desktop), 1000);
     };
     window.addEventListener('resize', handleResize);
     return () => {

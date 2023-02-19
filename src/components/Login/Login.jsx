@@ -4,10 +4,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import LoggedInContext from '../../contexts/LoggedInContext';
 import './Login.css';
+import { emailRegex } from '../../utils/regex';
 
 function Login({ handleLogin, loginError }) {
   const isLoggedIn = useContext(LoggedInContext);
-  const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.].*$/i;
   const [emailInputValue, setEmailInputValue] = useState('');
   const [passInputValue, setPassInputValue] = useState('');
   const [submitButtonClass, setSubmitButtonClass] = useState('login__button login__button_disabled');

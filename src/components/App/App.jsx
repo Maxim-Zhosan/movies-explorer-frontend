@@ -16,6 +16,7 @@ import Profile from '../Profile/Profile';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import * as mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
+import { shortMovieDuration } from '../../utils/constants';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -92,7 +93,7 @@ function App() {
 
   function filterMovies(request, movie, isShortMovie) {
     if (isShortMovie) {
-      return movie.duration < 40 && (movie.nameRU.toLowerCase().includes(request.toLowerCase()) || movie.nameEN.toLowerCase().includes(request.toLowerCase()));
+      return movie.duration < shortMovieDuration && (movie.nameRU.toLowerCase().includes(request.toLowerCase()) || movie.nameEN.toLowerCase().includes(request.toLowerCase()));
     }
     return movie.nameRU.toLowerCase().includes(request.toLowerCase()) || movie.nameEN.toLowerCase().includes(request.toLowerCase());
   }

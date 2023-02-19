@@ -5,11 +5,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import LoggedInContext from '../../contexts/LoggedInContext';
 import './Register.css';
+import { nameRegex, emailRegex, passRegex } from '../../utils/regex';
 
 function Register({ handleRegister, registerError }) {
-  const nameRegex = /^[a-zA-zа-яА-я0-9-\s]*$/i;
-  const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.].*$/i;
-  const passRegex = /^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/i;
   const isLoggedIn = useContext(LoggedInContext);
   const [nameInputValue, setNameInputValue] = useState('');
   const [emailInputValue, setEmailInputValue] = useState('');
