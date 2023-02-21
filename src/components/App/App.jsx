@@ -98,24 +98,6 @@ function App() {
     return movie.nameRU.toLowerCase().includes(request.toLowerCase()) || movie.nameEN.toLowerCase().includes(request.toLowerCase());
   }
 
-  function getMoviesFromApi(request, isShortMovie, setPreloaderStatus, setNoFoundMessage) {
-    loadMovies([]);
-    moviesApi.searchMovies()
-      .then((res) => {
-        if (res.length === 0) {
-          setNoFoundMessage(true);
-        }
-        const filteredMovies = res.filter((movie) => filterMovies(request, movie, isShortMovie));
-        loadMovies(filteredMovies);
-        localStorage.setItem('searchResult', JSON.stringify({
-          request, isShortMovie,
-        }));
-        setPreloaderStatus(false);
-        console.log(filteredMovies);
-      })
-      .catch((err) => console.log(err));
-  }
-
   function loadSavedMoviesList(request, isShortMovie) {
     mainApi.getSavedMovies()
       .then((res) => {
@@ -132,6 +114,25 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  function getMoviesFromApi(request, isShortMovie, setPreloaderStatus, setNoFoundMessage) {
+    loadMovies([]);
+    loadSavedMoviesList();
+    moviesApi.searchMovies()
+      .then((res) => {
+        if (res.length === 0) {
+          setNoFoundMessage(true);
+        }
+        const filteredMovies = res.filter((movie) => filterMovies(request, movie, isShortMovie));
+        loadMovies(filteredMovies);
+        localStorage.setItem('searchResult', JSON.stringify({
+          request, isShortMovie,
+        }));
+        setPreloaderStatus(false);
+        console.log(filteredMovies);
+      })
+      .catch((err) => console.log(err));
   }
 
   function onMovieLike(movie, isMovieLiked, setIsMovieLiked) {
