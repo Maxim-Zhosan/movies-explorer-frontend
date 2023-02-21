@@ -17,6 +17,7 @@ function Movies({
   const cardType = 'MovieCard';
 
   function searchMovies(request, isShortMovie) {
+    setNoFoundMessage(false);
     setPreloaderStatus(true);
     getMoviesFromApi(request, isShortMovie, setPreloaderStatus, setNoFoundMessage);
   }

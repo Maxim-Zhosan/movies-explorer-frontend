@@ -121,10 +121,11 @@ function App() {
     loadSavedMoviesList();
     moviesApi.searchMovies()
       .then((res) => {
-        if (res.length === 0) {
+        console.log(res);
+        const filteredMovies = res.filter((movie) => filterMovies(request, movie, isShortMovie));
+        if (filteredMovies.length === 0) {
           setNoFoundMessage(true);
         }
-        const filteredMovies = res.filter((movie) => filterMovies(request, movie, isShortMovie));
         loadMovies(filteredMovies);
         localStorage.setItem('searchResult', JSON.stringify({
           request, isShortMovie,
