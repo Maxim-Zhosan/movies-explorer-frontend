@@ -83,6 +83,7 @@ function App() {
           setProfileError(false);
           setIsLoggedIn(false);
           localStorage.removeItem('searchResult');
+          history('/');
         }
       })
       .catch((err) => {
