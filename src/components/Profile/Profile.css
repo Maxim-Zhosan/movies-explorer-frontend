@@ -26,17 +26,20 @@
 
 .account__field {
   display: flex;
+  flex-wrap: wrap;
   border-bottom: 1px solid #424242;
-  padding: 0 0 16px;
+  position: relative;
 }
 
 .account__label {
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
-  width: 100%;
+  width: max-content;
   margin: 0;
   color: #FFFFFF;
+  position: absolute;
+  z-index: 1;
 }
 
 .account__input {
@@ -51,6 +54,59 @@
   box-sizing: border-box;
   background-color: transparent;
   text-align: right;
+}
+
+.account__input:focus {
+  outline: 0;
+  outline-offset: 0;
+}
+
+.account__input:-webkit-autofill,
+.account__input:-webkit-autofill:hover,
+.account__input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #FFFFFF;
+  -webkit-box-shadow: 0 0 0px 40rem #202020 inset;
+}
+
+.account__input-error {
+  display: block;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  width: 100%;
+  border: none;
+  color: #EE3465;
+  margin: 2px 0;
+  min-height: 16px;
+  visibility: hidden;
+  text-align: right;
+}
+
+.account__update-profile-success-message {
+    display: block;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    width: 100%;
+    border: none;
+    color: #3DDC84;
+    margin: 2px 0 18px;
+    min-height: 16px;
+    visibility: hidden;
+    text-align: center;
+}
+
+.account__update-profile-success-message_active {
+  visibility: visible;
+}
+
+.account__input-error_type_submit {
+  text-align: center;
+  margin: 2px 0 18px;
+}
+
+.account__input-error_active {
+  visibility: visible;
 }
 
 .account__field:last-of-type {
@@ -73,8 +129,18 @@
   transition: ease-in 0.3s;
 }
 
+.account__edit-button_disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
 .account__edit-button:hover {
   color: #3DDC84;
+}
+
+.account__button_disabled {
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 .account__logout-button {

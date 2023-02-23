@@ -1,29 +1,98 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './Profile.css';
 import Header from '../Header/Header';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import { nameRegex, emailRegex } from '../../utils/regex';
 
-function Profile() {
+function Profile({
+  handleChangeProfileInfo, handleLogout, profileError, profileSuccess, setProfileError, setProfileSuccess,
+}) {
+  const currentUser = useContext(CurrentUserContext);
+  const [nameInputValue, setNameInputValue] = useState('');
+  const [emailInputValue, setEmailInputValue] = useState('');
+  const [submitButtonClass, setSubmitButtonClass] = useState('account__button account__button_disabled');
+  const errorMessageClass = `account__input-error account__input-error_type_submit ${profileError && 'account__input-error_active'}`;
+  const successMessageClass = `account__update-profile-success-message ${profileSuccess && 'account__update-profile-success-message_active'}`;
+
+  function onChangeInput(e) {
+    if (e.target.name === 'name') {
+      if (nameRegex.test(e.target.value)) {
+        setNameInputValue(e.target.value);
+      } else {
+        e.target.parentNode.querySelector('.account__input-error_type_name').classList.add('account__input-error_active');
+        setTimeout(() => {
+          e.target.parentNode.querySelector('.account__input-error_type_name').classList.remove('account__input-error_active');
+        }, 3000);
+      }
+    }
+    if (e.target.name === 'email') {
+      if (emailRegex.test(e.target.value)) {
+        e.target.parentNode.querySelector('.account__input-error_type_email').classList.remove('account__input-error_active');
+      } else {
+        e.target.parentNode.querySelector('.account__input-error_type_email').classList.add('account__input-error_active');
+      }
+      setEmailInputValue(e.target.value);
+    }
+  }
+
+  useEffect(() => {
+    if (nameRegex.test(nameInputValue) && nameInputValue.length >= 2 && emailRegex.test(emailInputValue) && (nameInputValue !== currentUser.name || emailInputValue !== currentUser.email)) {
+      setSubmitButtonClass('account__edit-button');
+    } else {
+      setSubmitButtonClass('account__edit-button account__edit-button_disabled');
+    }
+  }, [nameInputValue, emailInputValue]);
+
+  useEffect(() => {
+    setNameInputValue(currentUser.name || '');
+    setEmailInputValue(currentUser.email || '');
+  }, [currentUser]);
+
+  useEffect(() => {
+    setProfileError(false);
+    setProfileSuccess(false);
+  }, []);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!nameInputValue || !emailInputValue) {
+      return;
+    }
+    handleChangeProfileInfo({
+      _id: currentUser._id,
+      name: nameInputValue,
+      email: emailInputValue,
+    });
+  }
+
   return (
     <div className="profile">
       <Header />
       <div className="account">
 
-        <h1 className="account__title">
-          Привет, Виталий!
-        </h1>
-        <form className="account__form">
+        <h1 className="account__title">Привет, {currentUser.name}!</h1>
+        <form className="account__form" onSubmit={handleSubmit}>
           <div className="account__field">
             <label className="account__label" htmlFor="name">Имя</label>
-            <input required className="account__input" type="text" value="Виталий" name="name" id="name" />
+            <input required className="account__input" type="text" value={nameInputValue} name="name" id="name" onChange={(e) => onChangeInput(e)} />
+            <span className="account__input-error account__input-error_type_name">Доступные символы: Аа-Zz, Аа-Яя, пробел и дефис</span>
           </div>
           <div className="account__field">
             <label className="account__label" htmlFor="email">E-mail</label>
-            <input required className="account__input" type="text" value="pochta@yandex.ru" name="email" id="email" />
+            <input required className="account__input" type="text" value={emailInputValue} name="email" id="email" onChange={(e) => onChangeInput(e)} />
+            <span className="account__input-error account__input-error_type_email">Введите корректный e-mail</span>
           </div>
+          <span className={errorMessageClass}>Что-то пошло не так...</span>
+          <span className={successMessageClass}>Данные пользователя успешно обновлены</span>
+          <button type="submit" className={submitButtonClass}>Редактировать</button>
+          <button type="button" className="account__logout-button" onClick={handleLogout}>Выйти из аккаунта</button>
         </form>
-        <button type="button" className="account__edit-button">Редактировать</button>
-        <button type="button" className="account__logout-button">Выйти из аккаунта</button>
       </div>
     </div>
   );

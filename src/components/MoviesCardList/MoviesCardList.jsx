@@ -1,77 +1,88 @@
+/* eslint-disable no-else-return */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 import './MoviesCardList.css';
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import movies from '../../constants/movies';
-import savedMovies from '../../constants/savedMovies';
+import { moviesDisplayAmount } from '../../utils/constants';
 
-function MoviesCardList() {
-  const currentRoute = useLocation();
-  const limitFormula = window.innerWidth < 474 ? 5 : window.innerWidth < 1024 ? 8 : 16;
-  const [limit, setLimit] = React.useState(limitFormula);
-  const [addButtonClassName, setbuttonClassName] = React.useState(`movies-card-list__add-button ${limit >= movies.length && 'movies-card-list__add-button_non-active'}`);
-  const [addButtonSMClassName, setbuttonSMClassName] = React.useState(`movies-card-list__add-button ${limit >= savedMovies.length && 'movies-card-list__add-button_non-active'}`);
+function MoviesCardList({
+  currentUser, movies, savedMovies, cardType, onMovieLike, onDeleteMovie, noFoundMessage,
+}) {
+  const noFoundMessageName = `movies-card-list__no-found ${noFoundMessage && 'movies-card-list__no-found_active'}`;
+  const limitFormula = window.innerWidth < 474 ? moviesDisplayAmount.mobile : window.innerWidth < 1024 ? moviesDisplayAmount.tab : moviesDisplayAmount.desktop;
+  const [limit, setLimit] = useState(limitFormula);
+  const [addButtonClassName, setbuttonClassName] = useState(`movies-card-list__add-button ${limit >= movies.length && 'movies-card-list__add-button_non-active'}`);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = (event) => {
-      setLimit(window.innerWidth < 474 ? 5 : window.innerWidth < 1024 ? 8 : 16);
+      setTimeout(() => setLimit(window.innerWidth < 474 ? moviesDisplayAmount.mobile : window.innerWidth < 1024 ? moviesDisplayAmount.tab : moviesDisplayAmount.desktop), 1000);
     };
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  });
+  }, [window.innerWidth]);
 
-  React.useEffect(() => {
-    setbuttonClassName(`movies-card-list__add-button ${limit >= movies.length && 'movies-card-list__add-button_non-active'}`);
-    setbuttonSMClassName(`movies-card-list__add-button ${limit >= savedMovies.length && 'movies-card-list__add-button_non-active'}`);
-  }, [limit]);
+  useEffect(() => {
+    setbuttonClassName(`movies-card-list__add-button ${cardType === 'MovieCard' ? limit >= movies.length && 'movies-card-list__add-button_non-active' : limit >= movies.filter((movie) => movie.owner === currentUser._id).length && 'movies-card-list__add-button_non-active'}`);
+  }, [movies, limit]);
 
   function showMoreDocuments() {
     setLimit(limit + limitFormula);
   }
 
-  if (currentRoute.pathname === '/movies') {
-    const cardType = 'MovieCard';
+  if (cardType === 'MovieCard') {
     return (
       <main className="movies-card-list">
         <div className="movies-card-list__list">
           {movies.slice(0, limit).map((movie) => (
             <MoviesCard
-              name={movie.name}
-              link={movie.link}
-              likes={movie.likes}
+              id={movie.id}
+              name={movie.nameRU}
+              link={movie.trailerLink}
+              image={movie.image.url}
               duration={movie.duration}
-              cardOwner={movie.cardOwner}
-              type={cardType}
+              movie={movie}
+              cardType={cardType}
+              onMovieLike={onMovieLike}
+              onDeleteMovie={onDeleteMovie}
+              isLiked={(savedMovies.find((obj) => obj.movieId === movie.id && obj.owner === currentUser._id)) ? true : false}
             />
           ))}
         </div>
+        <p className={noFoundMessageName}>Фильмы по данному запросу отсутствуют</p>
+        <button className={addButtonClassName} type="button" aria-label="Меню" onClick={showMoreDocuments}>Ещё</button>
+      </main>
+    );
+  } else {
+    return (
+      <main className="movies-card-list">
+        <div className="movies-card-list__list">
+          {movies.filter((movie) => movie.owner === currentUser._id).slice(0, limit).map((movie) => (
+            <MoviesCard
+              id={movie.movieId}
+              name={movie.nameRU}
+              link={movie.trailerLink}
+              image={movie.image}
+              duration={movie.duration}
+              movie={movie}
+              cardType={cardType}
+              onMovieLike={onMovieLike}
+              onDeleteMovie={onDeleteMovie}
+            />
+          ))}
+        </div>
+        <p className={noFoundMessageName}>Фильмы по данному запросу отсутствуют</p>
         <button className={addButtonClassName} type="button" aria-label="Меню" onClick={showMoreDocuments}>Ещё</button>
       </main>
     );
   }
-  const cardType = 'SavedMovieCard';
-  return (
-    <main className="movies-card-list">
-      <div className="movies-card-list__list">
-        {savedMovies.slice(0, limit).map((movie) => (
-          <MoviesCard
-            name={movie.name}
-            link={movie.link}
-            likes={movie.likes}
-            duration={movie.duration}
-            cardOwner={movie.cardOwner}
-            type={cardType}
-          />
-        ))}
-      </div>
-      <button className={addButtonSMClassName} type="button" aria-label="Меню" onClick={showMoreDocuments}>Ещё</button>
-    </main>
-  );
 }
 
 export default MoviesCardList;

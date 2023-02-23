@@ -1,9 +1,7 @@
 # movies-explorer-frontend
-Сделана часть верстки дипломного проекта
+Сделана часть верстки дипломного проекта и фронтенд, подключен к бекэнду
 
 Ссылка на макет: https://disk.yandex.ru/d/6iFgBcbOvmd4gg
 Ссылка не репозиторий: https://github.com/Maxim-Zhosan/movies-explorer-frontend
-
-Чтобы отобразить версию хедера для незалогиненного пользователя нужно перевести в App.jsx стейт-переменную isLoggedIn в состояние "false"
-
-Кнопка "Ещё" на странице в фильмами видна при изменении ширины страницы, т.к. на максимальной ширине выводится весь массив и кнопка становится неактивной (как на макете).
+Cсылка на сайт: https://movies-mz.nomoredomains.rocks/
+Ссылка на пул-реквест: https://github.com/Maxim-Zhosan/movies-explorer-frontend/pull/2
